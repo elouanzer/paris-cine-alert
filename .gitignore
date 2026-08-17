@@ -1,0 +1,5 @@
+.venv/
+notebooks/
+__pycache__/
+.python-version
+uv.lock

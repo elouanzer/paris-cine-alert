@@ -1,0 +1,27 @@
+[project]
+name = "paris-cine-alert"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "elouanzer", email = "127297713+elouanzer@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "requests>=2.34.2",
+]
+
+[project.scripts]
+paris-cine-alert = "paris_cine_alert:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "pytest>=9.1.1",
+    "pytest-mock>=3.15.1",
+]
