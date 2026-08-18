@@ -1,20 +1,37 @@
 import string
-from typing import Dict, List
+import unicodedata
+from typing import Dict, List, Tuple
 
 class Matcher:
 
-    def __init__(self):
-        pass
+    def __init__(self, paris_movies):
+        index_slugs, index_titles = self._prepare_index_paris_movies(paris_movies)
+        self.index_slugs = index_slugs
+        self.index_titles = index_titles
 
     def clean_title(self, title: str) -> str:
-        """Clean title by removing the punctuation and lowering the case."""
+        """
+        Clean title by removing the punctuation and lowering the case.
+        
+        Args:
+            title (str): movie title.
+            
+        Returns:
+            title (str): cleaned movie title."""
         if not title:
             return ""
         title = title.lower().strip()
-        title = title.translate(str.maketrans('', '', string.punctuation))
+        title = unicodedata.normalize("NFKD", title)
+        title = "".join(
+            char for char in title
+            if not unicodedata.combining(char)
+        )
+        title = title.translate(
+            str.maketrans("", "", string.punctuation)
+        )
         return title
 
-    def _prepare_index_paris_movies(self, paris_movies: Dict) -> (Dict, Dict):
+    def _prepare_index_paris_movies(self, paris_movies: Dict) -> Tuple[Dict, Dict]:
         """
         Create an index for every user. The goal is to low down time complexity.
         """
@@ -46,17 +63,16 @@ class Matcher:
         Returns:
             matches (dict): dict of movies with an ID as key and a Movie object as value.
         """
-        index_slugs, index_titles = self._prepare_index_paris_movies(paris_movies)
         matches = {}
         
         for lb_movie in letterboxd_movies:
-            if lb_movie.slug in index_slugs:
-                movie_id = index_slugs[lb_movie.slug]
+            if lb_movie.slug in self.index_slugs:
+                movie_id = self.index_slugs[lb_movie.slug]
                 matches[movie_id] = lb_movie
                 continue
                 
             clean_title_lb = self.clean_title(lb_movie.title)
-            candidats = index_titles.get(clean_title_lb, [])
+            candidats = self.index_titles.get(clean_title_lb, [])
             
             for movie_id in candidats:
                 candidat = paris_movies[movie_id]
