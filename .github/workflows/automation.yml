@@ -1,0 +1,43 @@
+name: Envoi des Alertes Ciné (Mercredi matin)
+
+on:
+  schedule:
+    # 0 6 * * 3 = Le mercredi (3) à 06:00 UTC (soit 08h00 à Paris l'été)
+    - cron: '0 5 * * 3'
+  workflow_dispatch: 
+
+jobs:
+  run-paris-cine-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code source
+        uses: actions/checkout@v4
+
+      - name: Installer uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Configurer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Installer les dépendances
+        run: uv sync
+
+      - name: Générer le fichier Google Credentials
+        env:
+          GOOGLE_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+        run: |
+          echo "$GOOGLE_JSON" > credentials.json
+
+      - name: Lancer le script principal
+        env:
+          SMTP_SERVER: ${{ vars.SMTP_SERVER }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        run: uv run python src/main.py
