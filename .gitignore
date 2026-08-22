@@ -3,3 +3,4 @@ notebooks/
 __pycache__/
 .python-version
 uv.lock
+.env
