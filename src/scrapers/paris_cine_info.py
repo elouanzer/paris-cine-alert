@@ -1,18 +1,30 @@
 import requests
 
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Dict, List, Optional
 
 @dataclass
 class Screening:
-    """Movie screening."""
     movie_id: int
     theater: str
     date: str
     booking_url: Optional[str] = None
     version: Optional[str] = "VO"
 
-class CineParisInfoScraper:
+    def __post_init__(self):
+        # date formating
+        if not self.date:
+            self.date = ""
+        try:
+            dt = datetime.fromisoformat(self.date)
+            jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+            mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+            self.date = f"{jours[dt.weekday()]} {dt.day} {mois[dt.month - 1]} à {dt.strftime('%Hh%M')}"
+        except ValueError:
+            self.date = self.date
+
+class ParisCineInfoScraper:
 
     def __init__(self):
         self.api_url_movies = "https://paris-cine.info/get_movies.php" 

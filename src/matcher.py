@@ -53,7 +53,7 @@ class Matcher:
                     
         return index_slugs, index_titles
 
-    def movies_matcher(self, letterboxd_movies: List, paris_movies: Dict) -> List:
+    def movies_matcher(self, letterboxd_movies: List, paris_movies: Dict) -> Dict:
         """
         Get the movies that are in the 2 sets.
 
@@ -69,6 +69,8 @@ class Matcher:
             if lb_movie.slug in self.index_slugs:
                 movie_id = self.index_slugs[lb_movie.slug]
                 matches[movie_id] = lb_movie
+                lb_movie.french_title = paris_movies[movie_id].get("french_title")
+                lb_movie.director = paris_movies[movie_id].get("director")
                 continue
                 
             clean_title_lb = self.clean_title(lb_movie.title)
@@ -80,11 +82,15 @@ class Matcher:
                     try:
                         ecart = abs(int(lb_movie.year) - int(candidat.get("year")))
                         if ecart <= 1:
+                            lb_movie.french_title = candidat.get("french_title")
+                            lb_movie.director = candidat.get("director")
                             matches[movie_id] = lb_movie
                             break
                     except ValueError:
                         pass
                 else:
+                    lb_movie.french_title = candidat.get("french_title")
+                    lb_movie.director = candidat.get("director")
                     matches[movie_id] = lb_movie
                     break
                         

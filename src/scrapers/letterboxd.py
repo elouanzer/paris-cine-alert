@@ -12,6 +12,8 @@ class Movie:
     slug: str
     letterboxd_url: str
     year: Optional[str] = None
+    french_title: Optional[str] = None
+    director: Optional[str] = None
 
 class LetterboxdScraper:
     def __init__(self):
