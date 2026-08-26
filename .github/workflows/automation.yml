@@ -40,4 +40,4 @@ jobs:
           SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-        run: uv run python src/main.py
+        run: uv run python scripts/main.py
