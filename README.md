@@ -38,7 +38,7 @@ Paris Ciné Alert repose essentiellement sur le site **[Paris Ciné Infos](https
 
 ## Lancer le projet en local
 
-Si vous souhaitez exécuter le script vous-même, adapter la fréquence ou l'automatiser sur votre propre machine. Vous pouvez aussi résumer les étapes ci dessous ceci dans un fichier bash et / ou le scheduler. L'éxécution des commandes suivantes permettent juste de lancer le script et de recevoir le mail, mais n'automatise pas l'envoi systématique tous les mercredis matins.
+Si vous souhaitez exécuter le script vous-même, adapter la fréquence ou l'automatiser sur votre propre machine, vous pouvez cloner le repo et l'utiliser librement. Vous pouvez aussi résumer les étapes ci dessous ceci dans un fichier bash et / ou le scheduler. L'éxécution des commandes suivantes permettent juste de lancer le script et de recevoir le mail, mais n'automatise pas l'envoi systématique tous les mercredis matins.
 
 1. **Cloner le dépôt :**
    ```bash
