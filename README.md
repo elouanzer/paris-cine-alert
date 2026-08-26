@@ -1,7 +1,7 @@
 # Paris Ciné Alert
 
 <p align="center">
-  <img src="assets/paris_cine_alert_logo_no_background.png" alt="Paris Ciné Alert Logo" width="350">
+  <img src="assets/paris_cine_alert_logo.jpeg" alt="Paris Ciné Alert Logo" width="350">
 </p>
 
 <p align="center">
