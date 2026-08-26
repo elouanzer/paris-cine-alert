@@ -7,12 +7,12 @@ if project_root not in sys.path:
 import pytest
 from unittest.mock import Mock, patch
 
-from src.scrapers.cine_paris_info import CineParisInfoScraper, Screening
+from src.scrapers.paris_cine_info import ParisCineInfoScraper, Screening
 
 
 @pytest.fixture
 def scraper():
-    return CineParisInfoScraper()
+    return ParisCineInfoScraper()
 
 
 @pytest.fixture
@@ -37,7 +37,7 @@ def test_screening_defaults():
 
     assert screening.movie_id == 123
     assert screening.theater == "Le Champo"
-    assert screening.date == "2026-08-18 20:00"
+    assert screening.date == "Mardi 18 Août à 20h00"
     assert screening.booking_url is None
     assert screening.version == "VO"
 
@@ -85,7 +85,7 @@ def test_get_movies_from_api_returns_movies(scraper, mock_response):
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ) as mock_get:
         result = scraper.get_movies_from_api()
@@ -123,7 +123,7 @@ def test_get_movies_from_api_empty_data_returns_empty_dict(
     mock_response.json.return_value = {"data": []}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -138,7 +138,7 @@ def test_get_movies_from_api_missing_data_returns_empty_dict(
     mock_response.json.return_value = {}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -160,7 +160,7 @@ def test_get_movies_from_api_missing_movie_fields_are_none(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -187,7 +187,7 @@ def test_get_movies_from_api_duplicate_ids_use_last_entry(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -203,7 +203,7 @@ def test_get_movies_from_api_duplicate_ids_use_last_entry(
 
 def test_get_movies_from_api_request_exception_returns_empty_dict(scraper):
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         side_effect=Exception("connection failed"),
     ):
         result = scraper.get_movies_from_api()
@@ -220,7 +220,7 @@ def test_get_movies_from_api_http_error_returns_empty_dict(
     )
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -235,7 +235,7 @@ def test_get_movies_from_api_invalid_json_returns_empty_dict(
     mock_response.json.side_effect = ValueError("invalid JSON")
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movies_from_api()
@@ -255,7 +255,7 @@ def test_get_movies_from_api_uses_configured_headers(
     mock_response.json.return_value = {"data": []}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ) as mock_get:
         scraper.get_movies_from_api()
@@ -292,7 +292,7 @@ def test_get_movie_screening_returns_screenings(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ) as mock_get:
         result = scraper.get_movie_screening("123")
@@ -328,7 +328,7 @@ def test_get_movie_screening_empty_showtimes_returns_empty_list(
     mock_response.json.return_value = {"showtimes": []}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movie_screening("123")
@@ -343,7 +343,7 @@ def test_get_movie_screening_missing_showtimes_returns_empty_list(
     mock_response.json.return_value = {}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movie_screening("123")
@@ -364,7 +364,7 @@ def test_get_movie_screening_missing_fields_become_none(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movie_screening("123")
@@ -396,7 +396,7 @@ def test_get_movie_screening_preserves_movie_id(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movie_screening(987)
@@ -430,7 +430,7 @@ def test_get_movie_screening_preserves_screening_order(
     }
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ):
         result = scraper.get_movie_screening("123")
@@ -459,7 +459,7 @@ def test_get_movie_screening_non_200_returns_empty_list(
     mock_response.status_code = status_code
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ) as mock_get:
         result = scraper.get_movie_screening("123")
@@ -485,7 +485,7 @@ def test_get_movie_screening_uses_movie_id_as_parameter(
     mock_response.json.return_value = {"showtimes": []}
 
     with patch(
-        "src.scrapers.cine_paris_info.requests.get",
+        "src.scrapers.paris_cine_info.requests.get",
         return_value=mock_response,
     ) as mock_get:
         scraper.get_movie_screening("456")
