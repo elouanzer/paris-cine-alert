@@ -81,7 +81,7 @@ class Mailer:
         """
         
         msg = EmailMessage()
-        msg['Subject'] = "Ton programme Ciné de la semaine!"
+        msg['Subject'] = "Ton programme Ciné de la semaine"
         msg['From'] = f"Paris Ciné Alert <{EMAIL_SENDER}>"
         msg['To'] = recipient
         
