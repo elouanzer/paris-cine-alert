@@ -73,7 +73,11 @@ class Mailer:
 
     def send_mail(self, html_mail, recipient):
         """
-        Envoie l'email HTML compilé par Jinja2.
+        Send en email.
+
+        Args:
+            html_mail (str): content of the mail in HTML.
+            recipient (str): mail recipient.
         """
         
         msg = EmailMessage()
@@ -85,7 +89,10 @@ class Mailer:
         
         try:
             print("Connecting to SMTP...")
-            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=60) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
                 server.login(SMTP_LOGIN, SMTP_PASSWORD)
                 server.send_message(msg)
                 print(f"Email sent to {recipient}.")
