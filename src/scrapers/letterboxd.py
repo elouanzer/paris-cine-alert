@@ -37,7 +37,7 @@ class LetterboxdScraper:
             else:
                 raise ValueError(f"Provided link {url} is not a list from Letterboxd. It should follow this format: https://letterboxd.com/username/list_name/")
         except requests.RequestException as e:
-            print(f"Error while accessing {url} : {e}")
+            print(f"Error while accessing: {e}")
             return None
 
     def _extract_movies_from_soup(self, soup: BeautifulSoup) -> List[Movie]:

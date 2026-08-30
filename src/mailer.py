@@ -95,10 +95,10 @@ class Mailer:
                 server.ehlo()
                 server.login(SMTP_LOGIN, SMTP_PASSWORD)
                 server.send_message(msg)
-                print(f"Email sent to {recipient}.")
+                print(f"Email succesfuly sent.")
                 
         except Exception as e:
-            print(f"Error while sending mail to {recipient}: {e}")
+            print(f"Error while sending mail: {e}")
 
     def __call__(self, recipient:str, matches: list, pci_scrapper):
         header_color = "#475262"
