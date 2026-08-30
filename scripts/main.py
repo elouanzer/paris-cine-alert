@@ -33,7 +33,7 @@ def main():
     mailer = Mailer()
     matcher = Matcher(movies_pci)
 
-    for user in users:
+    for i, user in enumerate(users):
 
         email = user.get("Adresse e-mail")
         lb_list = user.get("Lien de la liste Letterboxd")
@@ -42,11 +42,11 @@ def main():
             print("Missing data, line ignored.")
             continue
             
-        print(f"\n Processing {lb_list} ({email})...")
+        print(f"\n Processing user {i}...")
         
         try:
             movies_lb = lb_scraper.scrape_list(lb_list)
-            print(f"{len(movies_lb)} found in {lb_list}.")
+            print(f"{len(movies_lb)} found in list")
             
             matches = matcher.movies_matcher(movies_lb, movies_pci)
             print(f"{len(matches)} matches.")
