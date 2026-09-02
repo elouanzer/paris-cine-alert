@@ -24,6 +24,9 @@ Seules deux informations sont nécessaires :
 * Votre **adresse e-mail** de réception.
 * L'**URL publique de votre liste ou watchlist Letterboxd**.
 
+> [!WARNING] 
+> Pensez à vérifier votre dossier **Spams / Courriers indésirables** si vous ne recevez rien le premier mercredi.
+
 ---
 
 ## Fonctionnement

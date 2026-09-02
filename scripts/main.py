@@ -54,7 +54,7 @@ def main():
             mailer(recipient=email, matches=matches, pci_scrapper=pci_scraper)
                 
         except Exception as e:
-            print(f"Error for {email}: {e}")
+            print(f"Error for user {i}: {e}")
 
     print("End.")
 

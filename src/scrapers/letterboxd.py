@@ -81,6 +81,7 @@ class LetterboxdScraper:
         """
         all_movies = []
         page_number = 1
+        base_url = base_url.strip().lower()
         
         while True:
             page_url = f"{base_url}page/{page_number}/" if page_number > 1 else base_url
